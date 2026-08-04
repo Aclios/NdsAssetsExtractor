@@ -1,9 +1,11 @@
 import sys
 import json
+import shutil
 import importlib
 from pathlib import Path
 
 from ndstools.formats import NDSRom
+from utils.dump_game_info import dump_game_info
 
 
 def main():
@@ -42,6 +44,12 @@ def main():
 
     assets_dir = Path("assets", rom.game_code)
     assets_dir.mkdir(exist_ok=True, parents=True)
+
+    icon_path = Path(extracted_rom_dir, "icon.png")
+    if icon_path.is_file():
+        shutil.copy(icon_path, Path(assets_dir, "icon.png"))
+
+    dump_game_info(rom, Path(assets_dir, "game_info.json"))
     module.extract_all_assets(extracted_rom_dir, assets_dir)
 
 
