@@ -47,14 +47,18 @@ def extract_all_texts(base_dir: Path, text_dir: Path, region: str):
 
     def _export_text_from_dir(base_dir: Path, text_dir: Path):
         expected_next_offset = 0
-        if region == 'jp':
+        if region == "jp":
             raw_string, _ = decompress(Path(base_dir, "common.txt").read_bytes())
         Path(text_dir).mkdir(exist_ok=True)
         for file in Path(base_dir).iterdir():
             if file.is_file() and file.suffix == ".adv":
                 _expected_next_offset = expected_next_offset if region == "jp" else 0
                 # Ugly hack because there is some presumably unused text in the middle of the file
-                if region == "jp" and str(base_dir).endswith("sub") and file.name == "scene003_s.txt.adv":
+                if (
+                    region == "jp"
+                    and str(base_dir).endswith("sub")
+                    and file.name == "scene003_s.txt.adv"
+                ):
                     next_offset = 0x03_9D_3B
                     missing_text = raw_string[_expected_next_offset:next_offset]
                     _expected_next_offset = next_offset
