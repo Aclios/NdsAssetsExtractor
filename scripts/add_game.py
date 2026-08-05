@@ -2,32 +2,14 @@ import json
 import sys
 import shutil
 from pathlib import Path
-
 from ndstools.formats import NDSRom
+
+from utils.region import get_region
+from utils.maker import get_maker
 
 
 def get_unique_names(names: dict):
     return list(set(names.values()))
-
-
-def get_region(game_code: str):
-    region_code = game_code[-1]
-    match region_code:
-        case "E":
-            return "North America"
-        case "F":
-            return "France"
-        case "J":
-            return "Japan"
-        case "K":
-            return "North Korea"
-        case "P":
-            return "Europe"
-        case "S":
-            return "Spain"
-        case _:
-            print(f"Warning: unknown region code: {region_code}")
-            return region_code
 
 
 def add_game(filepath: str):
@@ -37,7 +19,7 @@ def add_game(filepath: str):
         "title": rom.name,
         "code": rom.game_code,
         "region": get_region(rom.game_code),
-        "maker": rom.maker_code,
+        "maker": get_maker(rom.maker_code),
         "names": get_unique_names(rom.banner.get_names()),
     }
     global_game_code = rom.game_code[:-1]
