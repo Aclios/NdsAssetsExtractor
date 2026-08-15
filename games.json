@@ -1,4 +1,15 @@
 {
+    "APD": {
+        "APDJ": {
+            "title": "POKEMON_DASH",
+            "code": "APDJ",
+            "region": "Japan",
+            "maker": "01",
+            "names": [
+                "ポケモンダッシュ\nNintendo"
+            ]
+        }
+    },
     "YJA": {
         "YJAE": {
             "title": "THERESIA",

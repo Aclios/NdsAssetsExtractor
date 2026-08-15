@@ -40,7 +40,7 @@ def main():
 
     print("Extracting files from the ROM...")
     extracted_rom_dir = Path("temp", rom.game_code)
-    rom.extract_all(extracted_rom_dir)
+    #rom.extract_all(extracted_rom_dir)
 
     assets_dir = Path("assets", rom.game_code)
     assets_dir.mkdir(exist_ok=True, parents=True)
