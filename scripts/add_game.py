@@ -40,7 +40,9 @@ def add_game(filepath: str):
     script_path.mkdir(exist_ok=True, parents=True)
     readme_path = Path("extractors", global_game_code, "README.md")
     if not readme_path.exists():
-        readme_path.write_text(rom.banner.japanese.replace("\n", " "), encoding="utf-8")
+        readme_path.write_text(
+            f"# {rom.banner.japanese.replace("\n", " ")}", encoding="utf-8"
+        )
 
     shutil.copy(Path("extractors", "_template", "main.py"), script_path / "main.py")
     print(f"Copied extractor template into {script_path}.")
