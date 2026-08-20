@@ -2,3 +2,5 @@
 *.pyc
 temp/*
 assets/*
+.venv
+/*.py
