@@ -41,21 +41,9 @@ class Char999(SIR0):
             ]
         self.palette = RawPalette(self.palette_data, try_decompress=False)
 
-    def export_regions(self, out_dir: str):
-        for idx, region in enumerate(self.regions):
-            canva = ImageCanva(
-                RawBitmap(region.bitmap_data),
-                self.palette,
-                bit_depth=8,
-                im_size=(region.width, region.height),
-                linear=True,
-                transparency=True,
-            )
-            canva.resolve()
-            canva.image.save(Path(out_dir, f"{idx:04d}.png"))
-
     def export_sprite(self, out_path: str):
-        im = Image.new(mode="RGBA", size=self._calculate_dimensions())
+        im_size, offsets = self._calculate_dimensions()
+        im = Image.new(mode="RGBA", size=im_size)
         for region in self.regions:
             canva = ImageCanva(
                 RawBitmap(region.bitmap_data),
@@ -66,13 +54,15 @@ class Char999(SIR0):
                 transparency=True,
             )
             canva.resolve()
-            im.paste(canva.image, (region.dest_x, region.dest_y))
+            im.paste(canva.image, (region.dest_x - offsets[0], region.dest_y - offsets[1]))
         im.save(out_path)
 
     def _calculate_dimensions(self):
         width = max(region.width + region.dest_x for region in self.regions)
         height = max(region.height + region.dest_y for region in self.regions)
-        return (width, height)
+        x_offset = min(region.dest_x for region in self.regions)
+        y_offset = min(region.dest_y for region in self.regions)
+        return (width - x_offset, height - y_offset), (x_offset, y_offset)
 
 
 class Char999Region:
