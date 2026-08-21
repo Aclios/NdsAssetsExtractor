@@ -19,10 +19,10 @@ class Camera999(SIR0):
 
     def export_excel(self, out_path: str):
         data = [
-            [entry.symbol, entry.english, entry.japanese]
+            [entry.english, entry.japanese, entry.context]
             for entry in self.entries
         ]
-        columns=["English", "Japanese", "Location"]
+        columns=["English", "Japanese", "Context"]
         write_excel(out_path, data, columns)
 
 class CameraSection:
@@ -32,17 +32,17 @@ class CameraSection:
 
 class CameraEntry:
     def __init__(self, f: EndianBinaryReader):
-        self.symbol_offset = f.read_UInt32()
         self.english_offset = f.read_UInt32()
         self.japanese_offset = f.read_UInt32()
+        self.context_offset = f.read_UInt32()
         self.unk1 = f.read_UInt32()
         self.unk2 = f.read_UInt32()
         self.unk3 = f.read_UInt32()
         pos = f.tell()
-        f.seek(self.symbol_offset)
-        self.symbol = f.read_string().decode("shift-jis-2004")
         f.seek(self.english_offset)
         self.english = f.read_string().decode("shift-jis-2004")
         f.seek(self.japanese_offset)
         self.japanese = f.read_string().decode("shift-jis-2004")
+        f.seek(self.context_offset)
+        self.context = f.read_string().decode("shift-jis-2004")
         f.seek(pos)
