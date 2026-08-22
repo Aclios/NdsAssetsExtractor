@@ -15,15 +15,15 @@ def extract_all_images(base_dir: Path, images_dir: Path):
     Logic for images extraction.
     """
     print("Exporting backgrounds...")
-    for file in Path(base_dir, 'bg').rglob('*'):
-        if file.is_file() and file.suffix == '.dat':
+    for file in Path(base_dir, "bg").rglob("*"):
+        if file.is_file() and file.suffix == ".dat":
             bg = Bg999(file)
-            bg.export_image(Path(images_dir, 'bg', file.with_suffix('.png').name))
+            bg.export_image(Path(images_dir, "bg", file.with_suffix(".png").name))
 
     print("Exporting characters sprites...")
-    for file in Path(base_dir, 'char').iterdir():
+    for file in Path(base_dir, "char").iterdir():
         char = Char999(file)
-        char.export_sprite(Path(images_dir, 'cha', file.with_suffix('.png').name))
+        char.export_sprite(Path(images_dir, "cha", file.with_suffix(".png").name))
 
 
 def extract_all_models(base_dir: Path, assets_dir: Path):

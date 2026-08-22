@@ -30,7 +30,11 @@ class Char999(SIR0):
         self.bitmap_data = f.read_data_at(self.bitmap_start, self.total_bitmap_size)
         f.seek(self.regions_start)
         # There should be a better way to do that surely
-        regions_end = self.additional_starts[0] if self.additional_starts[0] else self.pointers_offset
+        regions_end = (
+            self.additional_starts[0]
+            if self.additional_starts[0]
+            else self.pointers_offset
+        )
         self.region_count = (regions_end - self.regions_start) // 0xA
         self.regions = [Char999Region(f) for _ in range(self.region_count)]
 
@@ -54,7 +58,9 @@ class Char999(SIR0):
                 transparency=True,
             )
             canva.resolve()
-            im.paste(canva.image, (region.dest_x - offsets[0], region.dest_y - offsets[1]))
+            im.paste(
+                canva.image, (region.dest_x - offsets[0], region.dest_y - offsets[1])
+            )
         im.save(out_path)
 
     def _calculate_dimensions(self):

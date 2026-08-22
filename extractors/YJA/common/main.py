@@ -85,7 +85,7 @@ def extract_all_sounds(base_dir: Path, sound_dir: Path):
     """
     print("Exporting sound effects...")
     sdat = SDAT(base_dir / "sound" / "sound_data.sdat")
-    sdat.unpack(sound_dir)
+    sdat.export_all(sound_dir)
 
 
 def extract_all_animations(base_dir: Path, assets_dir: Path):
