@@ -1,7 +1,7 @@
 from utils.excel import write_excel
 from engines.chunsoft import SIR0
 from ndstools.fs import EndianBinaryReader
-from .utils import read_shift_jis_at
+from .utils import read_999_string_at
 
 
 class Room999(SIR0):
@@ -41,9 +41,9 @@ class Room999Entry:
         self.symb3_offset = f.read_UInt32()
         self.symb4_offset = f.read_UInt32()
         pos = f.tell()
-        self.symb1 = read_shift_jis_at(f, self.symb1_offset)
-        self.text = read_shift_jis_at(f, self.text_offset)
-        self.symb2 = read_shift_jis_at(f, self.symb2_offset)
-        self.symb3 = read_shift_jis_at(f, self.symb3_offset)
-        self.symb4 = read_shift_jis_at(f, self.symb4_offset)
+        self.symb1 = read_999_string_at(f, self.symb1_offset)
+        self.text = read_999_string_at(f, self.text_offset)
+        self.symb2 = read_999_string_at(f, self.symb2_offset)
+        self.symb3 = read_999_string_at(f, self.symb3_offset)
+        self.symb4 = read_999_string_at(f, self.symb4_offset)
         f.seek(pos)

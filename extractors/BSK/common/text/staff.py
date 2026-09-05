@@ -1,7 +1,7 @@
 from utils.excel import write_excel
 from engines.chunsoft import SIR0
 from ndstools.fs import EndianBinaryReader
-from .utils import read_shift_jis_at
+from .utils import read_999_string_at
 
 
 class Staff999(SIR0):
@@ -34,5 +34,5 @@ class Staff999Entry:
     def __init__(self, f: EndianBinaryReader):
         self.text_offset = f.read_UInt32()
         pos = f.tell()
-        self.text = read_shift_jis_at(f, self.text_offset)
+        self.text = read_999_string_at(f, self.text_offset)
         f.seek(pos)

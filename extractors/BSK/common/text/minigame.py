@@ -1,7 +1,7 @@
 from utils.excel import write_excel
 from engines.chunsoft import SIR0
 from ndstools.fs import EndianBinaryReader
-from .utils import read_shift_jis_at
+from .utils import read_999_string_at
 
 
 class Minigame999(SIR0):
@@ -25,6 +25,6 @@ class Minigame999Entry:
         self.symb_offset = f.read_UInt32()
         self.text_offset = f.read_UInt32()
         pos = f.tell()
-        self.symb = read_shift_jis_at(f, self.symb_offset)
-        self.text = read_shift_jis_at(f, self.text_offset)
+        self.symb = read_999_string_at(f, self.symb_offset)
+        self.text = read_999_string_at(f, self.text_offset)
         f.seek(pos)

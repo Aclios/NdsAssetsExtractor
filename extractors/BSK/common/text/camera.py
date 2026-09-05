@@ -1,7 +1,7 @@
 from utils.excel import write_excel
 from engines.chunsoft import SIR0
 from ndstools.fs import EndianBinaryReader
-from .utils import read_shift_jis_at
+from .utils import read_999_string_at
 
 SECTION_COUNT = 17
 
@@ -43,7 +43,7 @@ class Camera999Entry:
         self.unk2 = f.read_UInt32()
         self.unk3 = f.read_UInt32()
         pos = f.tell()
-        self.english = read_shift_jis_at(f, self.english_offset)
-        self.japanese = read_shift_jis_at(f, self.japanese_offset)
-        self.context = read_shift_jis_at(f, self.context_offset)
+        self.english = read_999_string_at(f, self.english_offset)
+        self.japanese = read_999_string_at(f, self.japanese_offset)
+        self.context = read_999_string_at(f, self.context_offset)
         f.seek(pos)

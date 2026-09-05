@@ -1,7 +1,7 @@
 from utils.excel import write_excel
 from engines.chunsoft import SIR0
 from ndstools.fs import EndianBinaryReader
-from .utils import read_shift_jis_at
+from .utils import read_999_string_at
 
 
 class SysMes999(SIR0):
@@ -31,6 +31,6 @@ class SysMes999Entry:
         pos = f.tell()
         f.seek(self.table_offset)
         self.pages_offsets = list(iter(lambda: f.read_UInt32(), 0))
-        self.pages = [read_shift_jis_at(f, offset) for offset in self.pages_offsets]
-        self.symb = read_shift_jis_at(f, self.symb_offset)
+        self.pages = [read_999_string_at(f, offset) for offset in self.pages_offsets]
+        self.symb = read_999_string_at(f, self.symb_offset)
         f.seek(pos)

@@ -1,7 +1,7 @@
 from utils.excel import write_excel
 from engines.chunsoft import SIR0
 from ndstools.fs import EndianBinaryReader
-from .utils import read_shift_jis_at
+from .utils import read_999_string_at
 
 
 class Item999(SIR0):
@@ -34,7 +34,7 @@ class Item999Section:
         self.entries: list[Item999Entry] = []
         while f.peek(4) != bytes(4):
             self.entries.append(Item999Entry(f))
-        self.symbol = read_shift_jis_at(f, self.symb_offset)
+        self.symbol = read_999_string_at(f, self.symb_offset)
         f.seek(pos)
 
 
@@ -46,7 +46,7 @@ class Item999Entry:
         self.context_offset = f.read_UInt32()
         self.stuff = f.read(0x10)
         pos = f.tell()
-        self.japanese = read_shift_jis_at(f, self.japanese_offset)
-        self.english = read_shift_jis_at(f, self.english_offset)
-        self.context = read_shift_jis_at(f, self.context_offset)
+        self.japanese = read_999_string_at(f, self.japanese_offset)
+        self.english = read_999_string_at(f, self.english_offset)
+        self.context = read_999_string_at(f, self.context_offset)
         f.seek(pos)
